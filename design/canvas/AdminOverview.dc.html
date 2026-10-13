@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin overview</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F2F3F1;font:400 14px/1.45 "Schibsted Grotesk",system-ui,sans-serif;color:#121417}
+a{color:#2440C8}a:hover{color:#16288A}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.nav a{color:#B9BDC4;text-decoration:none;display:inline-flex;align-items:center;min-height:56px;border-bottom:2px solid transparent;font-weight:500}
+.nav a:hover{color:#fff}
+.nav a.on{color:#fff;border-bottom-color:#fff}
+.cap{font-size:12px;font-weight:500;color:#555B66;letter-spacing:.06em;text-transform:uppercase}
+.box{background:#fff;border:1px solid #DFE1DC;border-radius:10px}
+.seg{display:flex;border:1px solid #CDD0C9;border-radius:6px;overflow:hidden;background:#fff}
+.seg button{border:0;background:none;padding:0 14px;min-height:40px;font:500 13px "Schibsted Grotesk",sans-serif;color:#555B66;cursor:pointer}
+.seg button+button{border-left:1px solid #CDD0C9}
+.seg button.on{background:#121417;color:#fff}
+.todo{display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center;padding:14px 20px;border-top:1px solid #E6E7E3;text-decoration:none;color:#121417;min-height:44px}
+.todo:hover{background:#F8F8F6;color:#121417}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th{font-size:12px;font-weight:500;color:#555B66;letter-spacing:.06em;text-transform:uppercase;text-align:right;padding:12px 20px}
+th:first-child,td:first-child{text-align:left}
+td{padding:13px 20px;border-top:1px solid #E6E7E3;text-align:right}
+</style>
+</helmet>
+<div style="min-height: 100vh">
+  <header style="background: #121417">
+    <div style="max-width: 1376px; margin: 0 auto; padding: 0 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 0 40px">
+      <a href="AdminOverview.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; min-height: 56px">
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#fff"></rect><path d="M6 15.5h10M6 11h7M6 6.5h4" stroke="#121417" stroke-width="2" stroke-linecap="round"></path></svg>
+        <span style="font-weight: 700; font-size: 16px">Leadspipeline</span>
+        <span class="mono" style="font-size: 11px; color: #121417; background: #E6C46A; padding: 2px 6px; border-radius: 3px; font-weight: 600">ADMIN</span>
+      </a>
+      <nav class="nav" aria-label="Admin" style="display: flex; gap: 28px; flex-wrap: wrap">
+        <a class="on" href="AdminOverview.dc.html">Overview</a>
+        <a href="AdminLeads.dc.html">Intake</a>
+        <a href="AdminRefunds.dc.html">Refunds</a>
+        <a href="AdminInstitutions.dc.html">Institutions</a>
+        <a href="AdminPricing.dc.html">Pricing rules</a>
+      </nav>
+    </div>
+  </header>
+
+  <main style="max-width: 1376px; margin: 0 auto; padding: 36px 32px 64px; display: flex; flex-direction: column; gap: 28px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: flex-end">
+      <h1 style="font-size: 30px">Overview</h1>
+      <div class="seg" role="group" aria-label="Period">
+        <sc-for list="{{periods}}" as="p" hint-placeholder-count="3"><button class="{{p.cls}}" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}">{{p.label}}</button></sc-for>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 1px; background: #DFE1DC; border: 1px solid #DFE1DC; border-radius: 10px; overflow: hidden">
+      <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+        <div style="background: #fff; padding: 20px 22px; display: flex; flex-direction: column; gap: 4px">
+          <span class="cap">{{k.label}}</span>
+          <span class="mono" style="font-size: 32px; font-weight: 500; letter-spacing: -.02em">{{k.value}}</span>
+          <span style="font-size: 13px; color: #555B66">{{k.note}}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <section class="box" style="flex: 1 1 380px; overflow: hidden" aria-label="Needs attention">
+        <div style="padding: 18px 20px 8px"><h2 style="font-size: 17px">Needs attention</h2></div>
+        <a class="todo" href="AdminRefunds.dc.html"><span class="mono" style="font-size: 20px; font-weight: 600">4</span><span>Refund claims waiting for a decision<br><span style="font-size: 13px; color: #555B66">oldest filed 6 days ago</span></span><span aria-hidden="true">→</span></a>
+        <a class="todo" href="AdminLeads.dc.html"><span class="mono" style="font-size: 20px; font-weight: 600">11</span><span>Documents uploaded, not yet reviewed<br><span style="font-size: 13px; color: #555B66">across 4 leads heading for Gold</span></span><span aria-hidden="true">→</span></a>
+        <a class="todo" href="AdminInstitutions.dc.html"><span class="mono" style="font-size: 20px; font-weight: 600">2</span><span>Institutions waiting for approval<br><span style="font-size: 13px; color: #555B66">applied this week</span></span><span aria-hidden="true">→</span></a>
+        <a class="todo" href="AdminLeads.dc.html"><span class="mono" style="font-size: 20px; font-weight: 600">6</span><span>Listed leads expiring in 3 days, unsold<br><span style="font-size: 13px; color: #555B66">consider a lower price or auction</span></span><span aria-hidden="true">→</span></a>
+        <a class="todo" href="AdminInstitutions.dc.html"><span class="mono" style="font-size: 20px; font-weight: 600; color: #A42A1F">1</span><span>Institution over the refund-rate alert<br><span style="font-size: 13px; color: #555B66">Metro Business School, 31%</span></span><span aria-hidden="true">→</span></a>
+      </section>
+
+      <section class="box" style="flex: 999 1 560px; min-width: 0; overflow-x: auto" aria-label="By source">
+        <div style="padding: 18px 20px 8px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline"><h2 style="font-size: 17px">Lead quality by source</h2><span style="font-size: 13px; color: #555B66">Enrolled is as reported by institutions</span></div>
+        <table>
+          <thead><tr><th>Source</th><th>Listed</th><th>Sold</th><th>Gold share</th><th>Enrolled</th><th>Refunded</th></tr></thead>
+          <tbody>
+            <sc-for list="{{sources}}" as="s" hint-placeholder-count="6">
+              <tr><td style="font-weight: 500">{{s.name}}</td><td class="mono">{{s.listed}}</td><td class="mono">{{s.sold}}</td><td class="mono">{{s.gold}}</td><td class="mono">{{s.enrolled}}</td><td class="mono" style="color: {{s.refInk}}">{{s.refunded}}</td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { period: 1 }; }
+  renderVals() {
+    const P = ['7 days', '30 days', '12 months'];
+    const K = [
+      [['Leads listed', '64', '18 Gold, 46 Normal'], ['Sold', '71%', 'of leads listed'], ['Credits spent', '6,420', 'by 9 institutions'], ['Refund rate', '5.8%', 'of credits spent']],
+      [['Leads listed', '248', '71 Gold, 177 Normal'], ['Sold', '68%', 'of leads listed'], ['Credits spent', '24,960', 'by 14 institutions'], ['Refund rate', '6.4%', 'of credits spent']],
+      [['Leads listed', '2,310', '602 Gold, 1,708 Normal'], ['Sold', '64%', 'of leads listed'], ['Credits spent', '231,400', 'by 22 institutions'], ['Refund rate', '7.1%', 'of credits spent']]
+    ];
+    const kpis = K[this.state.period].map(([label, value, note]) => ({ label, value, note }));
+    const periods = P.map((label, i) => ({ label, cls: this.state.period === i ? 'on' : '', pressed: this.state.period === i ? 'true' : 'false', pick: () => this.setState({ period: i }) }));
+    const sources = [
+      ['Counsellor referrals', 61, '92%', '74%', '38%', '3%'], ['Partner agents', 38, '79%', '45%', '29%', '6%'],
+      ['Meta campaigns', 72, '58%', '8%', '14%', '9%'], ['Google campaigns', 41, '63%', '10%', '17%', '7%'],
+      ['Website form', 24, '54%', '13%', '12%', '8%'], ['Existing database', 12, '42%', '17%', '9%', '13%']
+    ].map(([name, listed, sold, gold, enrolled, refunded]) => ({ name, listed, sold, gold, enrolled, refunded, refInk: parseInt(refunded) >= 10 ? '#A42A1F' : '#121417' }));
+    return { kpis, periods, sources };
+  }
+}
+</script>
+</body>
+</html>

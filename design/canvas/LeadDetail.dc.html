@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>My leads</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F2F3F1;font:400 14px/1.45 "Schibsted Grotesk",system-ui,sans-serif;color:#121417}
+a{color:#2440C8}a:hover{color:#16288A}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.nav a{color:#555B66;text-decoration:none;display:inline-flex;align-items:center;min-height:56px;border-bottom:2px solid transparent;font-weight:500}
+.nav a:hover{color:#121417}
+.nav a.on{color:#121417;border-bottom-color:#121417}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:6px;font:600 14px "Schibsted Grotesk",sans-serif;cursor:pointer;text-decoration:none;border:1px solid transparent;white-space:nowrap}
+.btn-ink{background:#121417;color:#fff}.btn-ink:hover{background:#2B2F36;color:#fff}
+.btn-line{background:#fff;color:#121417;border-color:#CDD0C9}.btn-line:hover{border-color:#121417;color:#121417}
+.btn[disabled]{background:#ECEDEA;color:#6B707A;cursor:not-allowed;border-color:#ECEDEA}
+.cap{font-size:12px;font-weight:500;color:#555B66;letter-spacing:.06em;text-transform:uppercase}
+.item{display:flex;flex-direction:column;gap:4px;width:100%;text-align:left;background:#fff;border:0;border-top:1px solid #E6E7E3;padding:14px 18px;font:inherit;color:inherit;cursor:pointer}
+.item:hover{background:#F8F8F6}
+.item.on{background:#EEF1FC;box-shadow:inset 0 0 0 1px #2440C8}
+.stage{display:flex;flex-direction:column;gap:8px;background:none;border:0;padding:0;cursor:pointer;font:500 13px "Schibsted Grotesk",sans-serif;color:#121417;text-align:left;min-height:44px}
+.box{background:#fff;border:1px solid #DFE1DC;border-radius:10px}
+select,textarea{font:400 14px "Schibsted Grotesk",sans-serif;color:#121417;border:1px solid #CDD0C9;border-radius:6px;padding:10px 12px;min-height:44px;box-sizing:border-box;background:#fff;width:100%}
+label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#555B66}
+</style>
+</helmet>
+<div style="min-height: 100vh">
+  <header style="background: #fff; border-bottom: 1px solid #DFE1DC">
+    <div style="max-width: 1376px; margin: 0 auto; padding: 0 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 0 40px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #121417; min-height: 56px">
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#121417"></rect><path d="M6 15.5h10M6 11h7M6 6.5h4" stroke="#fff" stroke-width="2" stroke-linecap="round"></path></svg>
+        <span style="font-weight: 700; font-size: 16px; letter-spacing: -.01em">Leadspipeline</span>
+      </a>
+      <nav class="nav" aria-label="Main" style="display: flex; gap: 28px; flex-wrap: wrap">
+        <a href="Main.dc.html">Exchange</a>
+        <a class="on" href="LeadDetail.dc.html">My leads</a>
+        <a href="Wallet.dc.html">Credits</a>
+        <a href="AutoBuy.dc.html">Auto-buy</a>
+      </nav>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 20px; min-height: 56px">
+        <a href="Wallet.dc.html" style="text-decoration: none; color: #121417; display: flex; align-items: baseline; gap: 6px"><span class="mono" style="font-size: 15px; font-weight: 600">1,060</span><span style="font-size: 13px; color: #555B66">credits</span></a>
+        <span style="width: 1px; height: 20px; background: #DFE1DC"></span>
+        <span style="font-size: 14px; font-weight: 500">Sunrise College</span>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 1376px; margin: 0 auto; padding: 36px 32px 64px; display: flex; flex-direction: column; gap: 24px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <h1 style="font-size: 30px">My leads</h1>
+      <p style="margin: 0; color: #555B66; max-width: 64ch">Keep each student's stage up to date. A refund can only be claimed for a student who enrolled with you and then didn't complete.</p>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <section class="box" style="flex: 1 1 300px; max-width: 340px; overflow: hidden" aria-label="Purchased leads">
+        <div class="cap" style="padding: 12px 18px">{{count}} purchased</div>
+        <sc-for list="{{items}}" as="i" hint-placeholder-count="5">
+          <button class="{{i.cls}}" onClick="{{i.pick}}" aria-pressed="{{i.pressed}}">
+            <span style="display: flex; justify-content: space-between; gap: 8px"><span style="font-weight: 600">{{i.name}}</span><span class="mono" style="font-size: 12px; color: #555B66">{{i.id}}</span></span>
+            <span style="font-size: 13px; color: #555B66; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{i.course}}</span>
+            <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: {{i.stageInk}}"><span style="width: 7px; height: 7px; border-radius: 50%; background: {{i.stageInk}}"></span>{{i.stageLabel}}</span>
+          </button>
+        </sc-for>
+      </section>
+
+      <div style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+        <section class="box" style="padding: 24px 28px; display: flex; flex-direction: column; gap: 22px" aria-label="Lead">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: flex-start">
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <div style="display: flex; gap: 10px; align-items: center"><span class="mono" style="font-size: 13px; color: #555B66">{{s.id}}</span><span style="font-size: 12px; font-weight: 600; color: {{s.catInk}}; background: {{s.catBg}}; padding: 3px 8px; border-radius: 4px">{{s.cat}}</span></div>
+              <h2 style="font-size: 26px">{{s.name}}</h2>
+              <div style="color: #555B66">{{s.course}} · {{s.intake}}</div>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap">
+              <a class="btn btn-line" href="#">Download documents</a>
+              <a class="btn btn-line" href="#">Export to CRM</a>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 16px; padding-top: 18px; border-top: 1px solid #E6E7E3">
+            <div><div class="cap">Email</div><div style="font-weight: 500">{{s.email}}</div></div>
+            <div><div class="cap">Phone</div><div class="mono" style="font-weight: 500">{{s.phone}}</div></div>
+            <div><div class="cap">Location</div><div style="font-weight: 500">{{s.country}}</div></div>
+            <div><div class="cap">Bought</div><div style="font-weight: 500">{{s.bought}} · <span class="mono">{{s.paid}} cr</span></div></div>
+          </div>
+        </section>
+
+        <section class="box" style="padding: 24px 28px; display: flex; flex-direction: column; gap: 18px" aria-label="Stage">
+          <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: baseline">
+            <h3 style="font-size: 17px">Stage</h3>
+            <span style="font-size: 13px; color: #555B66">Last updated {{s.updated}}</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px" role="group" aria-label="Set stage">
+            <sc-for list="{{stages}}" as="g" hint-placeholder-count="7">
+              <button class="stage" onClick="{{g.pick}}" aria-pressed="{{g.pressed}}">
+                <span style="height: 4px; border-radius: 2px; background: {{g.bar}}"></span>
+                <span style="font-weight: {{g.weight}}; color: {{g.ink}}">{{g.label}}</span>
+              </button>
+            </sc-for>
+          </div>
+        </section>
+
+        <section class="box" style="padding: 24px 28px; display: flex; flex-direction: column; gap: 16px" aria-label="Refund">
+          <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: baseline">
+            <h3 style="font-size: 17px">Refund</h3>
+            <span style="font-size: 13px; font-weight: 600; color: {{r.ink}}">{{r.status}}</span>
+          </div>
+          <p style="margin: 0; color: #555B66; max-width: 70ch">{{r.text}}</p>
+          <sc-if value="{{r.open}}" hint-placeholder-val="{{false}}">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px; align-items: end">
+              <div><label for="rr">Reason</label><select id="rr"><option>Withdrew before cut-off</option><option>Visa refused, did not commence</option><option>Contact details invalid</option></select></div>
+              <div><label for="rd">Withdrawal date</label><select id="rd"><option>Select date</option></select></div>
+              <div style="grid-column: 1 / -1"><label for="rn">Evidence and notes</label><textarea id="rn" rows="2" placeholder="Attach the CoE cancellation or withdrawal letter, and add the student ID"></textarea></div>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap"><a class="btn btn-line" href="#">Attach file</a><button class="btn btn-ink">Claim {{s.paid}} credits</button></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{r.locked}}" hint-placeholder-val="{{true}}">
+            <div><button class="btn" disabled>Claim refund</button></div>
+          </sc-if>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { sel: 'L-10482', stage: { 'L-10482': 1, 'L-10311': 5, 'L-10290': 4, 'L-10251': 3, 'L-10188': 6 } }; }
+  renderVals() {
+    const S = [['Received', '#555B66'], ['Contacted', '#2440C8'], ['Applied', '#2440C8'], ['Offer', '#2440C8'], ['Enrolled', '#17703F'], ['Withdrawn', '#A24A0B'], ['Completed', '#17703F']];
+    const L = [
+      { id: 'L-10482', gold: true, name: 'Aarav Sharma', course: 'Master of Information Technology', intake: 'Feb 2027', email: 'aarav.s@example.com', phone: '+977 98•• ••• 214', country: 'Kathmandu, Nepal', bought: '12 Oct', paid: 180, updated: 'today' },
+      { id: 'L-10311', gold: false, name: 'Kim Nguyen', course: 'Diploma of Business', intake: 'Jul 2026', email: 'kim.n@example.com', phone: '+84 90• ••• 771', country: 'Onshore, NSW', bought: '02 Jun', paid: 60, updated: '9 Oct' },
+      { id: 'L-10290', gold: true, name: 'Riya Patel', course: 'Bachelor of Nursing', intake: 'Jul 2026', email: 'riya.p@example.com', phone: '+91 98••• ••409', country: 'Ahmedabad, India', bought: '28 May', paid: 220, updated: '21 Jul' },
+      { id: 'L-10251', gold: false, name: 'Daniel Okafor', course: 'Master of Project Management', intake: 'Feb 2027', email: 'daniel.o@example.com', phone: '+234 80• ••• 5521', country: 'Lagos, Nigeria', bought: '14 May', paid: 55, updated: '30 Sep' },
+      { id: 'L-10188', gold: false, name: 'Sofia Herrera', course: 'Cert IV in Commercial Cookery', intake: 'Feb 2026', email: 'sofia.h@example.com', phone: '+57 31• ••• 0942', country: 'Onshore, QLD', bought: '20 Jan', paid: 32, updated: '1 Oct' }
+    ];
+    const st = this.state;
+    const stageOf = (id) => st.stage[id] ?? 0;
+    const items = L.map(l => {
+      const on = st.sel === l.id, k = stageOf(l.id);
+      return { ...l, cls: 'item' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', stageLabel: S[k][0], stageInk: S[k][1], pick: () => this.setState({ sel: l.id }) };
+    });
+    const sl = L.find(l => l.id === st.sel) || L[0];
+    const k = stageOf(sl.id);
+    const withdrawn = k === 5;
+    const stages = S.map(([label, col], i) => {
+      const reached = withdrawn ? (i <= 4 || i === 5) : (i <= k && i !== 5);
+      const cur = i === k;
+      return { label, pressed: cur ? 'true' : 'false', weight: cur ? 600 : 400,
+        bar: cur ? col : (reached ? '#121417' : '#E1E3DE'), ink: cur ? col : (reached ? '#121417' : '#6B707A'),
+        pick: () => this.setState({ stage: { ...st.stage, [sl.id]: i } }) };
+    });
+    let r;
+    if (withdrawn) r = { status: 'Eligible', ink: '#17703F', open: true, text: 'The student enrolled and then withdrew. If that was before [CUT-OFF] and you claim within [CLAIM WINDOW], the credits come back to your wallet once our team has checked the evidence.' };
+    else if (k === 4) r = { status: 'Eligible if the student withdraws', ink: '#2440C8', open: true, text: 'The student is enrolled. If they withdraw before [CUT-OFF], you can claim the credits back here.' };
+    else if (k === 6) r = { status: 'Closed', ink: '#555B66', open: false, text: 'The student completed. This lead is done.' };
+    else r = { status: 'Not available yet', ink: '#555B66', open: false, text: 'Refunds open once the student has enrolled with you. A student who doesn\'t reply or doesn\'t enrol isn\'t refundable. Invalid contact details can be reported within [INVALID WINDOW] of purchase.' };
+    return { items, count: L.length, stages, r: { ...r, locked: !r.open },
+      s: { ...sl, cat: sl.gold ? 'Gold' : 'Normal', catInk: sl.gold ? '#6B4F0B' : '#3A3F48', catBg: sl.gold ? '#F3ECD8' : '#ECEDEA' } };
+  }
+}
+</script>
+</body>
+</html>

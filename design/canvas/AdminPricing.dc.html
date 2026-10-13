@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pricing and rules</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F2F3F1;font:400 14px/1.45 "Schibsted Grotesk",system-ui,sans-serif;color:#121417}
+a{color:#2440C8}a:hover{color:#16288A}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.nav a{color:#B9BDC4;text-decoration:none;display:inline-flex;align-items:center;min-height:56px;border-bottom:2px solid transparent;font-weight:500}
+.nav a:hover{color:#fff}
+.nav a.on{color:#fff;border-bottom-color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:6px;font:600 14px "Schibsted Grotesk",sans-serif;cursor:pointer;text-decoration:none;border:1px solid transparent;white-space:nowrap}
+.btn-ink{background:#121417;color:#fff}.btn-ink:hover{background:#2B2F36;color:#fff}
+.btn-line{background:#fff;color:#121417;border-color:#CDD0C9}
+.set{display:flex;flex-wrap:wrap;gap:16px 48px;padding:28px 0;border-top:1px solid #DFE1DC}
+.set>div:first-child{flex:1 1 260px;max-width:340px;display:flex;flex-direction:column;gap:6px}
+.set>div:last-child{flex:999 1 520px;min-width:0}
+.desc{margin:0;color:#555B66;font-size:13px}
+.seg{display:inline-flex;border:1px solid #CDD0C9;border-radius:6px;overflow:hidden;background:#fff}
+.seg button{border:0;background:none;padding:0 14px;min-height:40px;font:500 13px "Schibsted Grotesk",sans-serif;color:#555B66;cursor:pointer}
+.seg button+button{border-left:1px solid #CDD0C9}
+.seg button.on{background:#121417;color:#fff}
+input,select{font:500 14px "IBM Plex Mono",monospace;color:#121417;border:1px solid #CDD0C9;border-radius:6px;padding:0 12px;min-height:44px;box-sizing:border-box;background:#fff;width:100%}
+label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#3A3F48}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:14px 16px}
+table{border-collapse:collapse;width:100%;background:#fff;border:1px solid #DFE1DC;border-radius:8px}
+th{font-size:12px;font-weight:500;color:#555B66;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:10px 14px;border-bottom:1px solid #E6E7E3}
+td{padding:8px 14px;border-top:1px solid #E6E7E3}
+</style>
+</helmet>
+<div style="min-height: 100vh">
+  <header style="background: #121417">
+    <div style="max-width: 1376px; margin: 0 auto; padding: 0 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 0 40px">
+      <a href="AdminOverview.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; min-height: 56px">
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#fff"></rect><path d="M6 15.5h10M6 11h7M6 6.5h4" stroke="#121417" stroke-width="2" stroke-linecap="round"></path></svg>
+        <span style="font-weight: 700; font-size: 16px">Leadspipeline</span>
+        <span class="mono" style="font-size: 11px; color: #121417; background: #E6C46A; padding: 2px 6px; border-radius: 3px; font-weight: 600">ADMIN</span>
+      </a>
+      <nav class="nav" aria-label="Admin" style="display: flex; gap: 28px; flex-wrap: wrap">
+        <a href="AdminOverview.dc.html">Overview</a>
+        <a href="AdminLeads.dc.html">Intake</a>
+        <a href="AdminRefunds.dc.html">Refunds</a>
+        <a href="AdminInstitutions.dc.html">Institutions</a>
+        <a class="on" href="AdminPricing.dc.html">Pricing rules</a>
+      </nav>
+    </div>
+  </header>
+
+  <main style="max-width: 1120px; margin: 0 auto; padding: 36px 32px 64px; display: flex; flex-direction: column">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: flex-end; padding-bottom: 28px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <h1 style="font-size: 30px">Pricing and rules</h1>
+        <p style="margin: 0; color: #555B66; max-width: 60ch">The business rules the platform runs on. Changes apply to leads listed and claims filed after you save; existing purchases keep the rules they were bought under.</p>
+      </div>
+      <div style="display: flex; gap: 10px"><button class="btn btn-line">Discard</button><button class="btn btn-ink">Save changes</button></div>
+    </div>
+
+    <section class="set" aria-label="Lead prices">
+      <div><h2 style="font-size: 17px">Lead prices</h2><p class="desc">Default list price in credits. Ops can override a single lead when listing it.</p></div>
+      <div style="overflow-x: auto">
+        <table>
+          <thead><tr><th>Study level</th><th>Normal</th><th>Gold</th></tr></thead>
+          <tbody>
+            <tr><td>VET / Certificate</td><td><input aria-label="VET Normal price" placeholder="[PRICE]"></td><td><input aria-label="VET Gold price" placeholder="[PRICE]"></td></tr>
+            <tr><td>Diploma</td><td><input aria-label="Diploma Normal price" placeholder="[PRICE]"></td><td><input aria-label="Diploma Gold price" placeholder="[PRICE]"></td></tr>
+            <tr><td>Bachelor</td><td><input aria-label="Bachelor Normal price" placeholder="[PRICE]"></td><td><input aria-label="Bachelor Gold price" placeholder="[PRICE]"></td></tr>
+            <tr><td>Master / Grad Dip</td><td><input aria-label="Master Normal price" placeholder="[PRICE]"></td><td><input aria-label="Master Gold price" placeholder="[PRICE]"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="set" aria-label="Ageing">
+      <div><h2 style="font-size: 17px">Price drops and expiry</h2><p class="desc">Unsold leads get cheaper over time, then come off the exchange.</p></div>
+      <div class="grid">
+        <div><label for="a1">Drop price after (days)</label><input id="a1" placeholder="[DAYS]"></div>
+        <div><label for="a2">Drop by (%)</label><input id="a2" placeholder="[%]"></div>
+        <div><label for="a3">Remove from exchange after (days)</label><input id="a3" placeholder="[DAYS]"></div>
+      </div>
+    </section>
+
+    <section class="set" aria-label="Auctions">
+      <div><h2 style="font-size: 17px">Auctions</h2><p class="desc">Which leads are auctioned instead of sold at a fixed price.</p></div>
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div><span style="font-size: 13px; font-weight: 500; color: #3A3F48; display: block; margin-bottom: 6px">Auction these leads</span>
+          <div class="seg" role="group" aria-label="Auction scope"><sc-for list="{{scope}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" aria-pressed="{{o.pressed}}" onClick="{{o.pick}}">{{o.label}}</button></sc-for></div></div>
+        <div class="grid">
+          <div><label for="b1">Length (hours)</label><input id="b1" placeholder="[HOURS]"></div>
+          <div><label for="b2">Reserve, % of list price</label><input id="b2" placeholder="[%]"></div>
+          <div><label for="b3">Minimum raise (credits)</label><input id="b3" placeholder="[CREDITS]"></div>
+          <div><label for="b4">Extend if bid in last (min)</label><input id="b4" placeholder="[MIN]"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="set" aria-label="Refund rules">
+      <div><h2 style="font-size: 17px">Refund rules</h2><p class="desc">Checked automatically on every claim. A student who never enrols is never refundable.</p></div>
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div class="grid">
+          <div><label for="c1">"Didn't complete" means withdrew before</label><select id="c1"><option>Census date</option><option>[N] weeks after start</option><option>End of first term</option></select></div>
+          <div><label for="c2">Claim within (days of withdrawal)</label><input id="c2" placeholder="[DAYS]"></div>
+          <div><label for="c3">Invalid-lead claims within (days of purchase)</label><input id="c3" placeholder="[DAYS]"></div>
+        </div>
+        <div><span style="font-size: 13px; font-weight: 500; color: #3A3F48; display: block; margin-bottom: 6px">Amount refunded</span>
+          <div class="seg" role="group" aria-label="Refund amount"><sc-for list="{{amount}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" aria-pressed="{{o.pressed}}" onClick="{{o.pick}}">{{o.label}}</button></sc-for></div></div>
+        <div class="grid">
+          <div><label for="c4">Alert when an institution's refund rate passes (%)</label><input id="c4" placeholder="[%]"></div>
+          <div><label for="c5">Outcome updates required for refunds</label><select id="c5"><option>Yes, stage must be Enrolled first</option><option>No</option></select></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="set" aria-label="Credits">
+      <div><h2 style="font-size: 17px">Credits</h2><p class="desc">What a credit is worth and how long it lasts. Refunds are always paid in credits, never cash.</p></div>
+      <div class="grid">
+        <div><label for="d1">1 credit equals (AUD)</label><input id="d1" placeholder="[AUD]"></div>
+        <div><label for="d2">Credits expire after (months)</label><input id="d2" placeholder="[MONTHS] or never"></div>
+        <div><label for="d3">Minimum top-up (credits)</label><input id="d3" placeholder="[CREDITS]"></div>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { scope: 'gold', amount: 'full' }; }
+  renderVals() {
+    const seg = (key, opts) => opts.map(([id, label]) => ({ label, cls: this.state[key] === id ? 'on' : '', pressed: this.state[key] === id ? 'true' : 'false', pick: () => this.setState({ [key]: id }) }));
+    return {
+      scope: seg('scope', [['none', 'None'], ['gold', 'Gold only'], ['all', 'All leads']]),
+      amount: seg('amount', [['full', 'Full price'], ['partial', 'Partial: [%] of price']])
+    };
+  }
+}
+</script>
+</body>
+</html>

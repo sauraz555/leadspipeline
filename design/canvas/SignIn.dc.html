@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sign in</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F2F3F1;font:400 14px/1.45 "Schibsted Grotesk",system-ui,sans-serif;color:#121417}
+a{color:#2440C8}a:hover{color:#16288A}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:6px;font:600 14px "Schibsted Grotesk",sans-serif;cursor:pointer;text-decoration:none;border:1px solid transparent;white-space:nowrap}
+.btn-ink{background:#121417;color:#fff}.btn-ink:hover{background:#2B2F36;color:#fff}
+.tab{background:none;border:0;border-bottom:2px solid transparent;padding:0 2px;min-height:44px;font:600 15px "Schibsted Grotesk",sans-serif;color:#555B66;cursor:pointer}
+.tab.on{color:#121417;border-bottom-color:#121417}
+input,select{font:400 15px "Schibsted Grotesk",sans-serif;color:#121417;border:1px solid #CDD0C9;border-radius:6px;padding:0 12px;min-height:44px;box-sizing:border-box;background:#fff;width:100%}
+label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#3A3F48}
+.cap{font-size:12px;font-weight:500;color:#9AA0A9;letter-spacing:.06em;text-transform:uppercase}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap">
+  <section style="flex: 1 1 420px; background: #121417; color: #fff; padding: 56px 56px 48px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 48px" aria-label="About">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#fff"></rect><path d="M6 15.5h10M6 11h7M6 6.5h4" stroke="#121417" stroke-width="2" stroke-linecap="round"></path></svg>
+      <span style="font-weight: 700; font-size: 16px">Leadspipeline</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 20px; max-width: 30rem">
+      <h1 style="font-size: 40px; line-height: 1.1; color: #fff">Student leads for colleges and universities, screened before you see them.</h1>
+      <p style="margin: 0; color: #B9BDC4; font-size: 16px">Buy with credits. Gold leads come with every document checked. If a student enrols with you and doesn't complete, you can claim the credits back.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; border-top: 1px solid #2E323A; padding-top: 24px">
+      <div><div class="cap">Step 1</div><div style="font-weight: 500">Apply for access</div></div>
+      <div><div class="cap">Step 2</div><div style="font-weight: 500">We approve your institution</div></div>
+      <div><div class="cap">Step 3</div><div style="font-weight: 500">Add credits, buy leads</div></div>
+    </div>
+  </section>
+
+  <section style="flex: 1 1 520px; display: flex; align-items: center; justify-content: center; padding: 56px 32px; box-sizing: border-box" aria-label="Account">
+    <div style="width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 24px">
+      <div style="display: flex; gap: 28px; border-bottom: 1px solid #DFE1DC" role="group" aria-label="Mode">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="2"><button class="{{t.cls}}" onClick="{{t.pick}}" aria-pressed="{{t.pressed}}">{{t.label}}</button></sc-for>
+      </div>
+
+      <sc-if value="{{isSignIn}}" hint-placeholder-val="{{true}}">
+        <form style="display: flex; flex-direction: column; gap: 16px">
+          <div><label for="e">Work email</label><input id="e" type="email" placeholder="you@institution.edu.au"></div>
+          <div><label for="p">Password</label><input id="p" type="password"></div>
+          <a class="btn btn-ink" href="Main.dc.html">Sign in</a>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; flex-wrap: wrap; gap: 8px"><a href="#">Email me a sign-in link</a><a href="#">Forgot password</a></div>
+          <p style="margin: 0; font-size: 13px; color: #555B66">Our staff sign in here too, and are taken to the admin area.</p>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{isApply}}" hint-placeholder-val="{{false}}">
+        <form style="display: flex; flex-direction: column; gap: 16px">
+          <div><label for="n">Institution name</label><input id="n"></div>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+            <div><label for="ty">Type</label><select id="ty"><option>College / RTO</option><option>University</option></select></div>
+            <div><label for="cr">CRICOS / RTO code</label><input id="cr" class="mono"></div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+            <div><label for="cn">Your name</label><input id="cn"></div>
+            <div><label for="ph">Phone</label><input id="ph" type="tel"></div>
+          </div>
+          <div><label for="we">Work email</label><input id="we" type="email"></div>
+          <label style="display: flex; gap: 10px; align-items: flex-start; font-weight: 400; color: #121417"><input type="checkbox" style="width: 18px; min-height: 18px; height: 18px; margin-top: 2px"><span>I agree to the <a href="#">buyer terms</a>, including the refund policy and how student data may be used.</span></label>
+          <button class="btn btn-ink" type="button" onClick="{{submit}}">Send application</button>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{isDone}}" hint-placeholder-val="{{false}}">
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <h2 style="font-size: 24px">Application received</h2>
+          <p style="margin: 0; color: #555B66">We check every institution before it can buy leads, usually within [REVIEW TIME]. You'll get an email with a link to set your password once you're approved.</p>
+          <div style="border: 1px solid #DFE1DC; border-radius: 8px; background: #fff; padding: 14px 16px; display: flex; justify-content: space-between"><span>Status</span><span style="font-weight: 600; color: #A24A0B">Pending review</span></div>
+          <button class="btn" style="background: #fff; border-color: #CDD0C9; color: #121417" onClick="{{reset}}">Back to sign in</button>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { mode: 'signin' }; }
+  renderVals() {
+    const m = this.state.mode;
+    const tabs = [['signin', 'Sign in'], ['apply', 'Apply for access']].map(([id, label]) => {
+      const on = m === id || (id === 'apply' && m === 'done');
+      return { label, cls: 'tab' + (on ? ' on' : ''), pressed: on ? 'true' : 'false', pick: () => this.setState({ mode: id }) };
+    });
+    return { tabs, isSignIn: m === 'signin', isApply: m === 'apply', isDone: m === 'done',
+      submit: () => this.setState({ mode: 'done' }), reset: () => this.setState({ mode: 'signin' }) };
+  }
+}
+</script>
+</body>
+</html>

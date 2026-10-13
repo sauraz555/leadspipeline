@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Auto-buy rules</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F2F3F1;font:400 14px/1.45 "Schibsted Grotesk",system-ui,sans-serif;color:#121417}
+a{color:#2440C8}a:hover{color:#16288A}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.nav a{color:#555B66;text-decoration:none;display:inline-flex;align-items:center;min-height:56px;border-bottom:2px solid transparent;font-weight:500}
+.nav a:hover{color:#121417}
+.nav a.on{color:#121417;border-bottom-color:#121417}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:6px;font:600 14px "Schibsted Grotesk",sans-serif;cursor:pointer;text-decoration:none;border:1px solid transparent;white-space:nowrap}
+.btn-ink{background:#121417;color:#fff}.btn-ink:hover{background:#2B2F36;color:#fff}
+.btn-line{background:#fff;color:#121417;border-color:#CDD0C9}
+.cap{font-size:12px;font-weight:500;color:#555B66;letter-spacing:.06em;text-transform:uppercase}
+.box{background:#fff;border:1px solid #DFE1DC;border-radius:10px}
+.rule{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;padding:18px 20px;border-top:1px solid #E6E7E3;align-items:start}
+.rule.on{background:#EEF1FC;box-shadow:inset 0 0 0 1px #2440C8}
+.pick{background:none;border:0;padding:0;font:600 15px "Schibsted Grotesk",sans-serif;color:#121417;cursor:pointer;text-align:left;min-height:28px}
+.sw{width:44px;height:26px;border-radius:13px;border:0;cursor:pointer;position:relative;padding:0}
+.chip{border:1px solid #CDD0C9;background:#fff;border-radius:5px;min-height:36px;padding:0 12px;font:500 13px "Schibsted Grotesk",sans-serif;color:#121417;cursor:pointer}
+.chip.on{background:#121417;border-color:#121417;color:#fff}
+input,select{font:400 14px "Schibsted Grotesk",sans-serif;color:#121417;border:1px solid #CDD0C9;border-radius:6px;padding:0 12px;min-height:44px;box-sizing:border-box;background:#fff;width:100%}
+label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#3A3F48}
+</style>
+</helmet>
+<div style="min-height: 100vh">
+  <header style="background: #fff; border-bottom: 1px solid #DFE1DC">
+    <div style="max-width: 1376px; margin: 0 auto; padding: 0 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 0 40px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #121417; min-height: 56px">
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#121417"></rect><path d="M6 15.5h10M6 11h7M6 6.5h4" stroke="#fff" stroke-width="2" stroke-linecap="round"></path></svg>
+        <span style="font-weight: 700; font-size: 16px; letter-spacing: -.01em">Leadspipeline</span>
+      </a>
+      <nav class="nav" aria-label="Main" style="display: flex; gap: 28px; flex-wrap: wrap">
+        <a href="Main.dc.html">Exchange</a>
+        <a href="LeadDetail.dc.html">My leads</a>
+        <a href="Wallet.dc.html">Credits</a>
+        <a class="on" href="AutoBuy.dc.html">Auto-buy</a>
+      </nav>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 20px; min-height: 56px">
+        <a href="Wallet.dc.html" style="text-decoration: none; color: #121417; display: flex; align-items: baseline; gap: 6px"><span class="mono" style="font-size: 15px; font-weight: 600">1,060</span><span style="font-size: 13px; color: #555B66">credits</span></a>
+        <span style="width: 1px; height: 20px; background: #DFE1DC"></span>
+        <span style="font-size: 14px; font-weight: 500">Sunrise College</span>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 1376px; margin: 0 auto; padding: 36px 32px 64px; display: flex; flex-direction: column; gap: 24px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: flex-end">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <h1 style="font-size: 30px">Auto-buy rules</h1>
+        <p style="margin: 0; color: #555B66; max-width: 66ch">When a newly listed lead matches a rule, we buy it for you at its listed price and it goes straight into My leads. Rules never go over your daily or monthly limit, and never bid in auctions.</p>
+      </div>
+      <button class="btn btn-ink">New rule</button>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <section class="box" style="flex: 999 1 560px; min-width: 0; overflow: hidden" aria-label="Rules">
+        <div class="cap" style="padding: 12px 20px">{{activeCount}} of {{total}} rules on</div>
+        <sc-for list="{{rules}}" as="r" hint-placeholder-count="3">
+          <div class="{{r.cls}}">
+            <button class="pick" onClick="{{r.pick}}">{{r.name}}</button>
+            <button class="sw" role="switch" aria-checked="{{r.checked}}" aria-label="Turn {{r.name}} on or off" onClick="{{r.toggle}}" style="background: {{r.swBg}}"><span style="position: absolute; top: 3px; left: {{r.knob}}; width: 20px; height: 20px; border-radius: 50%; background: #fff"></span></button>
+            <span style="font-size: 13px; color: #555B66; grid-column: 1 / -1">{{r.summary}}</span>
+            <span style="display: flex; gap: 24px; flex-wrap: wrap; grid-column: 1 / -1; font-size: 13px">
+              <span>Max <span class="mono" style="font-weight: 600">{{r.max}} cr</span> a lead</span>
+              <span><span class="mono" style="font-weight: 600">{{r.day}}</span> a day</span>
+              <span>Bought this month <span class="mono" style="font-weight: 600">{{r.used}} / {{r.month}}</span> cr</span>
+            </span>
+          </div>
+        </sc-for>
+      </section>
+
+      <aside class="box" style="flex: 1 1 380px; max-width: 460px; padding: 22px 24px; display: flex; flex-direction: column; gap: 16px" aria-label="Edit rule">
+        <div class="cap">Edit rule</div>
+        <div><label for="rn">Rule name</label><input id="rn" placeholder="{{s.name}}"></div>
+        <div>
+          <span style="font-size: 13px; font-weight: 500; color: #3A3F48; display: block; margin-bottom: 6px">Category</span>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap" role="group" aria-label="Category">
+            <sc-for list="{{cats}}" as="c" hint-placeholder-count="3"><button class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+          <div><label for="lv">Study level</label><select id="lv"><option>Master</option><option>Bachelor</option><option>Diploma / VET</option><option>Any</option></select></div>
+          <div><label for="ar">Course area</label><select id="ar"><option>IT and data</option><option>Business</option><option>Nursing and health</option><option>Any</option></select></div>
+          <div><label for="co">Countries</label><select id="co"><option>Nepal, India, Sri Lanka</option><option>Any</option></select></div>
+          <div><label for="en">English at least</label><select id="en"><option>IELTS 6.5 / PTE 58</option><option>Any</option></select></div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+          <div><label for="mx">Max per lead</label><input id="mx" class="mono" placeholder="{{s.max}}"></div>
+          <div><label for="dy">Per day</label><input id="dy" class="mono" placeholder="{{s.day}}"></div>
+          <div><label for="mo">Per month</label><input id="mo" class="mono" placeholder="{{s.month}}"></div>
+        </div>
+        <div style="background: #F6F6F4; border-radius: 8px; padding: 12px 14px; font-size: 13px">Last 30 days, <span class="mono" style="font-weight: 600">{{s.matches}}</span> listed leads would have matched this rule.</div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap"><button class="btn btn-ink">Save rule</button><button class="btn btn-line">Delete</button></div>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { sel: 0, on: [true, true, false], cat: 'gold' }; }
+  renderVals() {
+    const R = [
+      { name: 'IT Masters, South Asia', summary: 'Gold only · Master · IT and data · Nepal, India, Sri Lanka · IELTS 6.5+', max: 200, day: 3, month: '2,000', used: 540, matches: 38 },
+      { name: 'Nursing, any country', summary: 'Gold or Normal · Bachelor · Nursing and health · any country · PTE 58+', max: 230, day: 2, month: '1,500', used: 220, matches: 21 },
+      { name: 'Onshore business diplomas', summary: 'Normal · Diploma · Business · onshore only · any English', max: 60, day: 5, month: '600', used: 0, matches: 64 }
+    ];
+    const st = this.state;
+    const rules = R.map((r, i) => {
+      const on = st.on[i], sel = st.sel === i;
+      return { ...r, cls: 'rule' + (sel ? ' on' : ''), checked: on ? 'true' : 'false', swBg: on ? '#17703F' : '#B9BDC4', knob: on ? '21px' : '3px',
+        pick: () => this.setState({ sel: i }),
+        toggle: () => { const n = st.on.slice(); n[i] = !n[i]; this.setState({ on: n }); } };
+    });
+    const cats = [['gold', 'Gold only'], ['normal', 'Normal only'], ['both', 'Both']].map(([id, label]) => ({
+      label, cls: 'chip' + (st.cat === id ? ' on' : ''), pressed: st.cat === id ? 'true' : 'false', pick: () => this.setState({ cat: id }) }));
+    return { rules, cats, s: R[st.sel], total: R.length, activeCount: st.on.filter(Boolean).length };
+  }
+}
+</script>
+</body>
+</html>

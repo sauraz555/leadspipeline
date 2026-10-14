@@ -1,11 +1,11 @@
 # Design
 
 **Live, clickable design:** https://claude.ai/artifact/ApoCShMMbyV31zXYMFQssB
-(It's private: the owner has to share it from the page's Share menu before the dev team can open it.)
+(Shared as "anyone with the link".)
 
 The canvas has two pages:
 
-- **UI screens**: 10 interactive screens. Press Play on any screen to click through it.
+- **UI screens**: 10 interactive screens (press Play on any screen to click through it), plus **C · Components and states**, the sheet of reusable building blocks for developers.
 - **Flows for developers**: the screen map, lead lifecycle, buy and auction flow, refund claim flow, intake-to-Gold flow and data model.
 
 `canvas/` holds the source of every artboard (`*.dc.html`) plus the layout index (`canvas.json`). These files only render inside the canvas editor, so open the link above to view them. The same flows are written up as Mermaid diagrams in [`docs/FLOWS.md`](../docs/FLOWS.md), which GitHub renders.
@@ -24,6 +24,7 @@ The canvas has two pages:
 | A3 | `AdminRefunds.dc.html` | FINANCE | Refund claims with an automatic rule check |
 | A4 | `AdminInstitutions.dc.html` | ADMIN | Approve or suspend institutions, adjust credits |
 | A5 | `AdminPricing.dc.html` | ADMIN | Prices, ageing, auctions, refund rules, credits |
+| C | `Components.dc.html` | Dev team | Colours, type, buttons, fields, lead building blocks, messages, dialogs, empty and loading states |
 
 ## Visual system
 
@@ -32,6 +33,8 @@ The canvas has two pages:
 - **Accents:** one blue `#2440C8` for selection and links; brass `#8C6A12` / `#F3ECD8` for Gold only.
 - **Status:** positive `#17703F`, warning `#A24A0B`, negative `#A42A1F`.
 - **Buttons:** primary buttons are ink-filled; touch targets are at least 44px.
+- **Logo:** an L-shaped path ending in a gold arrow (a lead routed to its buyer). It's on ink in the institution portal and inverted in the admin area.
+- **States:** keyboard focus is a 2px blue ring. Anything that spends or returns credits asks for confirmation first and shows the balance afterwards. A success message is a dark pop-up at the bottom right; errors stay until dismissed. Empty states say why the list is empty and what to do next. Loading shows grey placeholder rows, never a full-page spinner.
 - **Navigation:** the institution portal has a white header; the admin area has a dark header with an `ADMIN` tag so it's never confused with the buyer side.
 
 The student names, institutions and numbers are examples only. Values still to be decided appear as `[PRICE]`, `[CUT-OFF]`, `[CLAIM WINDOW]` and so on.

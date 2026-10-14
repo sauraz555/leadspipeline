@@ -28,13 +28,18 @@ h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
 .claim:hover{background:#F8F8F6}
 .claim.on{background:#EEF1FC;box-shadow:inset 0 0 0 1px #2440C8}
 .rule{display:grid;grid-template-columns:20px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-top:1px solid #E6E7E3}
+:focus-visible{outline:2px solid #2440C8;outline-offset:2px}
+header :focus-visible{outline-color:#fff}
+::selection{background:#DCE3FB}
+.btn,.claim{transition:background-color .12s,border-color .12s}
+.claim.on{box-shadow:inset 3px 0 0 #2440C8}
 </style>
 </helmet>
 <div style="min-height: 100vh">
   <header style="background: #121417">
     <div style="max-width: 1376px; margin: 0 auto; padding: 0 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 0 40px">
       <a href="AdminLeads.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; min-height: 56px">
-        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#fff"></rect><path d="M6 15.5h10M6 11h7M6 6.5h4" stroke="#121417" stroke-width="2" stroke-linecap="round"></path></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#fff"></rect><path d="M8 6.5v10h8.5" stroke="#121417" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14 14l2.5 2.5L14 19" stroke="#8C6A12" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         <span style="font-weight: 700; font-size: 16px">Leadspipeline</span>
         <span class="mono" style="font-size: 11px; color: #121417; background: #E6C46A; padding: 2px 6px; border-radius: 3px; font-weight: 600">ADMIN</span>
       </a>
@@ -109,6 +114,12 @@ h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
               <button class="btn btn-line" onClick="{{s.ask}}">Ask for more evidence</button>
             </div>
           </sc-if>
+          <sc-if value="{{s.confirming}}" hint-placeholder-val="{{false}}">
+            <div role="alertdialog" aria-label="Confirm refund" style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
+              <span>Return <span class="mono" style="font-weight: 600">{{s.credits}} cr</span> to {{s.inst}}? Their balance updates straight away.</span>
+              <span style="display: flex; gap: 10px"><button class="btn btn-line" onClick="{{s.undo}}">Cancel</button><button class="btn btn-ink" onClick="{{s.doApprove}}">Confirm refund</button></span>
+            </div>
+          </sc-if>
           <sc-if value="{{s.decided}}" hint-placeholder-val="{{false}}">
             <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
               <span style="font-weight: 600; color: {{s.decInk}}">{{s.decText}}</span>
@@ -150,7 +161,7 @@ class Component extends DCLogic {
     const st = this.state;
     const D = { ok: ['Approved. Credits returned.', '#17703F', 'Approved'], no: ['Rejected', '#A42A1F', 'Rejected'], ask: ['Waiting on the institution for more evidence', '#A24A0B', 'Info requested'] };
     const claims = C.map(c => {
-      const on = st.sel === c.id, d = st.dec[c.id];
+      const on = st.sel === c.id, d = st.dec[c.id] === 'confirm' ? null : st.dec[c.id];
       const pass = c.rules.every(r => r === PASS);
       return { ...c, cls: 'claim' + (on ? ' on' : ''), pressed: on ? 'true' : 'false',
         status: d ? D[d][2] : (pass ? 'Rules pass' : 'Rules fail'), statusInk: d ? D[d][1] : (pass ? '#17703F' : '#A42A1F'),
@@ -163,10 +174,11 @@ class Component extends DCLogic {
     const pass = sc.rules.every(r => r === PASS);
     const returned = C.filter(c => st.dec[c.id] === 'ok').reduce((t, c) => t + c.credits, 0);
     return { claims, rules,
-      open: C.filter(c => !st.dec[c.id] || st.dec[c.id] === 'ask').length, returned,
+      open: C.filter(c => !st.dec[c.id] || st.dec[c.id] === 'ask' || st.dec[c.id] === 'confirm').length, returned,
       s: { ...sc, verdict: pass ? 'All rules pass' : 'Fails the refund rules', verdictInk: pass ? '#17703F' : '#A42A1F',
-        undecided: !d, decided: !!d, decText: d ? D[d][0] : '', decInk: d ? D[d][1] : '#121417',
-        approve: () => set('ok'), reject: () => set('no'), ask: () => set('ask'), undo: () => set(null) } };
+        undecided: !d, confirming: d === 'confirm', decided: !!d && d !== 'confirm',
+        decText: d && D[d] ? D[d][0] : '', decInk: d && D[d] ? D[d][1] : '#121417',
+        approve: () => set('confirm'), doApprove: () => set('ok'), reject: () => set('no'), ask: () => set('ask'), undo: () => set(null) } };
   }
 }
 </script>

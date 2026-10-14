@@ -14,33 +14,40 @@
 body{margin:0;background:#F2F3F1;font:400 14px/1.45 "Schibsted Grotesk",system-ui,sans-serif;color:#121417}
 a{color:#2440C8}a:hover{color:#16288A}
 h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+:focus-visible{outline:2px solid #2440C8;outline-offset:2px}
+::selection{background:#DCE3FB}
 .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
-.nav a{color:#555B66;text-decoration:none;display:inline-flex;align-items:center;min-height:56px;border-bottom:2px solid transparent;font-weight:500}
+.nav a{color:#555B66;text-decoration:none;display:inline-flex;align-items:center;min-height:56px;border-bottom:2px solid transparent;font-weight:500;transition:color .15s}
 .nav a:hover{color:#121417}
 .nav a.on{color:#121417;border-bottom-color:#121417}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:6px;font:600 14px "Schibsted Grotesk",sans-serif;cursor:pointer;text-decoration:none;border:1px solid transparent;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:6px;font:600 14px "Schibsted Grotesk",sans-serif;cursor:pointer;text-decoration:none;border:1px solid transparent;white-space:nowrap;transition:background-color .15s,border-color .15s}
 .btn-ink{background:#121417;color:#fff}.btn-ink:hover{background:#2B2F36;color:#fff}
 .btn-line{background:#fff;color:#121417;border-color:#CDD0C9}.btn-line:hover{border-color:#121417;color:#121417}
+.ibtn{position:relative;width:40px;height:40px;border-radius:8px;border:0;background:none;color:#555B66;cursor:pointer;display:grid;place-items:center}
+.ibtn:hover{background:#F2F3F1;color:#121417}
 .seg{display:flex;border:1px solid #CDD0C9;border-radius:6px;overflow:hidden;background:#fff}
-.seg button{border:0;background:none;padding:0 14px;min-height:40px;font:500 13px "Schibsted Grotesk",sans-serif;color:#555B66;cursor:pointer}
+.seg button{border:0;background:none;padding:0 14px;min-height:40px;font:500 13px "Schibsted Grotesk",sans-serif;color:#555B66;cursor:pointer;transition:background-color .15s,color .15s}
+.seg button:hover{color:#121417}
 .seg button+button{border-left:1px solid #CDD0C9}
 .seg button.on{background:#121417;color:#fff}
 .cap{font-size:12px;font-weight:500;color:#555B66;letter-spacing:.06em;text-transform:uppercase}
-.row{display:grid;grid-template-columns:92px minmax(0,1fr) 110px 92px 96px 72px 128px;align-items:center;gap:16px;width:100%;text-align:left;background:#fff;border:0;border-top:1px solid #E6E7E3;padding:14px 20px;font:inherit;color:inherit;cursor:pointer;min-height:64px}
+.row{display:grid;grid-template-columns:92px minmax(0,1fr) 110px 92px 96px 72px 128px;align-items:center;gap:16px;width:100%;text-align:left;background:#fff;border:0;border-top:1px solid #E6E7E3;padding:14px 20px;font:inherit;color:inherit;cursor:pointer;min-height:64px;transition:background-color .12s}
 .row:hover{background:#F8F8F6}
-.row.on{background:#EEF1FC;box-shadow:inset 0 0 0 1px #2440C8}
+.row.on{background:#EEF1FC;box-shadow:inset 3px 0 0 #2440C8}
 .head{display:grid;grid-template-columns:92px minmax(0,1fr) 110px 92px 96px 72px 128px;gap:16px;padding:10px 20px}
 .sq{width:9px;height:9px;border-radius:2px}
 .redact{display:inline-block;height:12px;border-radius:2px;background:#D9DBD5;vertical-align:middle}
 input{font:500 15px "IBM Plex Mono",monospace;color:#121417;border:1px solid #CDD0C9;border-radius:6px;padding:0 12px;min-height:44px;box-sizing:border-box;background:#fff;width:100%}
+input:focus{border-color:#2440C8;box-shadow:0 0 0 3px #DCE3FB;outline:none}
 label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#555B66}
+.toast{position:absolute;right:32px;bottom:32px;display:flex;gap:12px;align-items:flex-start;border-radius:8px;padding:14px 16px;box-shadow:0 8px 24px rgba(18,20,23,.18);max-width:420px;z-index:5}
 </style>
 </helmet>
-<div style="min-height: 100vh">
+<div style="min-height: 100vh; position: relative">
   <header style="background: #fff; border-bottom: 1px solid #DFE1DC">
     <div style="max-width: 1376px; margin: 0 auto; padding: 0 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 0 40px">
       <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #121417; min-height: 56px">
-        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#121417"></rect><path d="M6 15.5h10M6 11h7M6 6.5h4" stroke="#fff" stroke-width="2" stroke-linecap="round"></path></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#121417"></rect><path d="M8 6.5v10h8.5" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14 14l2.5 2.5L14 19" stroke="#E6C46A" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         <span style="font-weight: 700; font-size: 16px; letter-spacing: -.01em">Leadspipeline</span>
       </a>
       <nav class="nav" aria-label="Main" style="display: flex; gap: 28px; flex-wrap: wrap">
@@ -49,10 +56,14 @@ label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#555B
         <a href="Wallet.dc.html">Credits</a>
         <a href="AutoBuy.dc.html">Auto-buy</a>
       </nav>
-      <div style="margin-left: auto; display: flex; align-items: center; gap: 20px; min-height: 56px">
-        <a href="Wallet.dc.html" style="text-decoration: none; color: #121417; display: flex; align-items: baseline; gap: 6px"><span class="mono" style="font-size: 15px; font-weight: 600">{{balance}}</span><span style="font-size: 13px; color: #555B66">credits</span></a>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 16px; min-height: 56px">
+        <a href="Wallet.dc.html" style="text-decoration: none; color: #121417; display: flex; align-items: baseline; gap: 6px"><span class="mono" style="font-size: 15px; font-weight: 600">{{balanceText}}</span><span style="font-size: 13px; color: #555B66">credits</span></a>
+        <button class="ibtn" aria-label="Notifications, 2 unread">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 8a6 6 0 1112 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 004 0"></path></svg>
+          <span style="position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: #A24A0B; box-shadow: 0 0 0 2px #fff"></span>
+        </button>
         <span style="width: 1px; height: 20px; background: #DFE1DC"></span>
-        <span style="font-size: 14px; font-weight: 500">Sunrise College</span>
+        <span style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500"><span style="width: 30px; height: 30px; border-radius: 50%; background: #ECEDEA; display: grid; place-items: center; font-size: 12px; font-weight: 600">SC</span>Sunrise College</span>
       </div>
     </div>
   </header>
@@ -70,7 +81,7 @@ label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#555B
         <div class="seg" role="group" aria-label="Sale type">
           <sc-for list="{{modes}}" as="m" hint-placeholder-count="3"><button class="{{m.cls}}" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}">{{m.label}}</button></sc-for>
         </div>
-        <button class="btn btn-line">More filters</button>
+        <button class="btn btn-line"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>More filters</button>
       </div>
     </div>
 
@@ -95,18 +106,26 @@ label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#555B
               </span>
               <span class="mono" style="font-size: 13px; color: #555B66">{{l.age}}</span>
               <span style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px">
-                <span class="mono" style="font-size: 15px; font-weight: 600">{{l.priceText}}</span>
+                <span class="mono" style="font-size: 15px; font-weight: 600; color: {{l.priceInk}}">{{l.priceText}}</span>
                 <span style="font-size: 12px; color: {{l.subInk}}">{{l.priceSub}}</span>
               </span>
             </button>
           </sc-for>
+          <sc-if value="{{isEmpty}}" hint-placeholder-val="{{false}}">
+            <div style="border-top: 1px solid #E6E7E3; padding: 56px 24px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8A8F98" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5M8.5 11h5"></path></svg>
+              <div style="font-weight: 600">No leads match these filters</div>
+              <div style="font-size: 13px; color: #555B66; max-width: 40ch">Normal leads are always sold at a fixed price. Try another combination, or let an auto-buy rule catch the next match.</div>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center"><button class="btn btn-line" onClick="{{clear}}">Clear filters</button><a class="btn btn-line" href="AutoBuy.dc.html">Create auto-buy rule</a></div>
+            </div>
+          </sc-if>
         </div>
       </section>
 
       <aside style="flex: 1 1 360px; max-width: 420px; background: #fff; border: 1px solid #DFE1DC; border-radius: 10px; display: flex; flex-direction: column" aria-label="Selected lead">
         <div style="padding: 22px 24px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid #E6E7E3">
           <div style="display: flex; justify-content: space-between; align-items: center">
-            <span class="mono" style="font-size: 13px; color: #555B66">{{s.id}}</span>
+            <span class="mono" style="font-size: 13px; color: #555B66">{{s.id}} · listed {{s.age}} ago</span>
             <span style="font-size: 12px; font-weight: 600; color: {{s.catInk}}; background: {{s.catBg}}; padding: 4px 8px; border-radius: 4px">{{s.catLong}}</span>
           </div>
           <h2 style="font-size: 22px">{{s.course}}</h2>
@@ -119,7 +138,7 @@ label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#555B
         </div>
 
         <div style="padding: 18px 24px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid #E6E7E3">
-          <div class="cap">Released on purchase</div>
+          <div style="display: flex; justify-content: space-between; align-items: center"><div class="cap">Released on purchase</div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8F98" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 018 0v3"></path></svg></div>
           <div style="display: grid; grid-template-columns: 96px 1fr; gap: 8px; align-items: center; font-size: 13px">
             <span style="color: #555B66">Name</span><span><span class="redact" style="width: 120px"></span></span>
             <span style="color: #555B66">Phone</span><span><span class="redact" style="width: 104px"></span></span>
@@ -130,21 +149,30 @@ label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#555B
         <div style="padding: 18px 24px; display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid #E6E7E3">
           <div class="cap">Documents</div>
           <sc-for list="{{s.docList}}" as="d" hint-placeholder-count="5">
-            <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: {{d.ink}}">{{d.name}}</span><span style="color: {{d.ink}}; font-weight: 500">{{d.state}}</span></div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: {{d.ink}}">{{d.name}}</span><span style="color: {{d.stInk}}; font-weight: 500">{{d.state}}</span></div>
           </sc-for>
         </div>
 
         <div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 14px">
           <sc-if value="{{s.isBought}}" hint-placeholder-val="{{false}}">
             <div style="display: flex; flex-direction: column; gap: 12px">
-              <div style="font-weight: 600; color: #17703F">Purchased. Contact details and documents are in My leads.</div>
+              <div style="display: flex; gap: 10px; align-items: center; font-weight: 600; color: #17703F"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Yours. Contact details and documents are in My leads.</div>
               <a class="btn btn-ink" href="LeadDetail.dc.html">Open lead</a>
+            </div>
+          </sc-if>
+          <sc-if value="{{s.isGone}}" hint-placeholder-val="{{false}}">
+            <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border: 1px solid #E3B9B4; border-radius: 8px; font-size: 13px">
+              <b style="color: #A42A1F">Sold to another institution</b>
+              <span>It was bought a moment before you. You weren't charged.</span>
             </div>
           </sc-if>
           <sc-if value="{{s.showBuy}}" hint-placeholder-val="{{true}}">
             <div style="display: flex; flex-direction: column; gap: 14px">
               <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="color: #555B66">Fixed price, exclusive</span><span class="mono" style="font-size: 24px; font-weight: 600">{{s.price}} cr</span></div>
-              <button class="btn btn-ink" onClick="{{s.buy}}">Buy for {{s.price}} credits</button>
+              <sc-if value="{{s.short}}" hint-placeholder-val="{{false}}">
+                <div style="display: flex; gap: 10px; align-items: flex-start; background: #FBF4EA; border: 1px solid #EBD3B4; border-radius: 8px; padding: 10px 12px; font-size: 13px">You need <span class="mono" style="font-weight: 600">{{s.need}}</span> more credits. <a href="Wallet.dc.html">Top up</a></div>
+              </sc-if>
+              <button class="btn btn-ink" onClick="{{s.ask}}">Buy for {{s.price}} credits</button>
             </div>
           </sc-if>
           <sc-if value="{{s.showBid}}" hint-placeholder-val="{{false}}">
@@ -152,11 +180,11 @@ label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#555B
               <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
                 <div><div class="cap">Top bid</div><div class="mono" style="font-size: 18px; font-weight: 600">{{s.top}}</div></div>
                 <div><div class="cap">Bids</div><div class="mono" style="font-size: 18px; font-weight: 600">{{s.bids}}</div></div>
-                <div><div class="cap">Closes in</div><div class="mono" style="font-size: 18px; font-weight: 600; color: #A24A0B">{{s.closes}}</div></div>
+                <div><div class="cap">Closes in</div><div class="mono" style="font-size: 18px; font-weight: 600; color: {{s.closeInk}}">{{s.closes}}</div></div>
               </div>
               <div><label for="bid">Your bid (min {{s.min}})</label><input id="bid" inputmode="numeric" placeholder="{{s.min}}"></div>
-              <button class="btn btn-ink" onClick="{{s.bid}}">Place bid</button>
-              <sc-if value="{{s.leading}}" hint-placeholder-val="{{false}}"><div style="font-size: 13px; color: #17703F; font-weight: 500">You're the top bidder. These credits are held until the auction closes.</div></sc-if>
+              <button class="btn btn-ink" onClick="{{s.ask}}">Place bid of {{s.min}} credits</button>
+              <sc-if value="{{s.leading}}" hint-placeholder-val="{{false}}"><div style="display: flex; gap: 8px; align-items: center; font-size: 13px; color: #17703F; font-weight: 500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>You're the top bidder. These credits are held until it closes.</div></sc-if>
             </div>
           </sc-if>
           <details style="font-size: 13px; color: #555B66; border-top: 1px solid #E6E7E3; padding-top: 12px">
@@ -167,54 +195,100 @@ label{font-size:13px;font-weight:500;display:block;margin-bottom:6px;color:#555B
       </aside>
     </div>
   </main>
+
+  <sc-if value="{{dialog.open}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; inset: 0; background: rgba(18,20,23,.42); display: flex; justify-content: center; align-items: flex-start; padding-top: 180px; z-index: 6">
+      <div role="dialog" aria-modal="true" aria-label="{{dialog.title}}" style="background: #fff; border-radius: 10px; width: calc(100% - 32px); max-width: 420px; box-shadow: 0 16px 40px rgba(18,20,23,.25); display: flex; flex-direction: column">
+        <div style="padding: 22px 24px 4px; display: flex; flex-direction: column; gap: 6px"><h3 style="font-size: 18px">{{dialog.title}}</h3><span style="color: #555B66; font-size: 13px">{{dialog.sub}}</span></div>
+        <div style="padding: 16px 24px; display: grid; grid-template-columns: 1fr auto; gap: 8px; font-size: 14px">
+          <span style="color: #555B66">{{dialog.amountLabel}}</span><span class="mono" style="font-weight: 600">{{dialog.amount}} cr</span>
+          <span style="color: #555B66">Balance after</span><span class="mono" style="font-weight: 600">{{dialog.after}} cr</span>
+        </div>
+        <p style="margin: 0; padding: 0 24px 16px; font-size: 13px; color: #555B66">{{dialog.note}}</p>
+        <div style="padding: 14px 24px 22px; display: flex; gap: 10px; justify-content: flex-end; border-top: 1px solid #E6E7E3"><button class="btn btn-line" onClick="{{dialog.cancel}}">Cancel</button><button class="btn btn-ink" onClick="{{dialog.confirm}}">{{dialog.cta}}</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{toast.show}}" hint-placeholder-val="{{false}}">
+    <div class="toast" role="status" style="background: {{toast.bg}}; color: {{toast.fg}}; border: {{toast.border}}">
+      <span style="flex: 1">{{toast.text}}</span>
+      <sc-if value="{{toast.link}}" hint-placeholder-val="{{false}}"><a href="LeadDetail.dc.html" style="color: inherit; font-weight: 600">Open</a></sc-if>
+      <button onClick="{{toast.close}}" aria-label="Dismiss" style="background: none; border: 0; color: inherit; opacity: .7; cursor: pointer; min-width: 28px; min-height: 28px; font-size: 18px; line-height: 1">×</button>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
 class Component extends DCLogic {
-  constructor(props) { super(props); this.state = { cat: 'all', mode: 'all', sel: 'L-10482', bought: {}, bid: {} }; }
+  constructor(props) { super(props); this.state = { cat: 'all', mode: 'all', sel: 'L-10482', bought: {}, gone: {}, bid: {}, dialog: null, toast: null }; }
   renderVals() {
     const L = [
-      { id: 'L-10482', gold: true, auction: true, course: 'Master of Information Technology', level: 'Master', intake: 'Feb 2027', country: 'Nepal', eng: 'IELTS 7.0', docs: 5, age: '2d', price: 180, top: 210, bids: 4, closes: '04:12:36', qual: 'BSc CSIT, 2024', budget: 'AUD 30–35k' },
+      { id: 'L-10482', gold: true, auction: true, course: 'Master of Information Technology', level: 'Master', intake: 'Feb 2027', country: 'Nepal', eng: 'IELTS 7.0', docs: 5, age: '2d', price: 180, top: 210, bids: 4, closes: '04:12:36', urgent: true, qual: 'BSc CSIT, 2024', budget: 'AUD 30–35k' },
       { id: 'L-10466', gold: true, auction: false, course: 'Bachelor of Nursing', level: 'Bachelor', intake: 'Jul 2027', country: 'India', eng: 'PTE 65', docs: 5, age: '4d', price: 220, qual: 'Year 12, 2025', budget: 'AUD 35–40k' },
-      { id: 'L-10458', gold: true, auction: true, course: 'Master of Business Analytics', level: 'Master', intake: 'Feb 2027', country: 'Vietnam', eng: 'IELTS 6.5', docs: 5, age: '5d', price: 160, top: 175, bids: 2, closes: '19:40:02', qual: 'BBA, 2023', budget: 'AUD 30–35k' },
+      { id: 'L-10458', gold: true, auction: true, course: 'Master of Business Analytics', level: 'Master', intake: 'Feb 2027', country: 'Vietnam', eng: 'IELTS 6.5', docs: 5, age: '5d', price: 160, top: 175, bids: 2, closes: '19:40:02', urgent: false, qual: 'BBA, 2023', budget: 'AUD 30–35k' },
       { id: 'L-10477', gold: false, auction: false, course: 'Diploma of Community Services', level: 'Diploma', intake: 'Feb 2027', country: 'Philippines', eng: '—', docs: 1, age: '3d', price: 40, qual: 'Year 12, 2022', budget: 'AUD 15–20k' },
-      { id: 'L-10451', gold: false, auction: false, course: 'Master of Professional Accounting', level: 'Master', intake: 'Feb 2027', country: 'Onshore, VIC', eng: 'IELTS 6.5', docs: 3, age: '6d', price: 60, qual: 'BCom, 2024', budget: 'AUD 30–35k' },
+      { id: 'L-10451', gold: false, auction: false, race: true, course: 'Master of Professional Accounting', level: 'Master', intake: 'Feb 2027', country: 'Onshore, VIC', eng: 'IELTS 6.5', docs: 3, age: '6d', price: 60, qual: 'BCom, 2024', budget: 'AUD 30–35k' },
       { id: 'L-10446', gold: false, auction: false, course: 'Graduate Diploma of Cyber Security', level: 'Grad Dip', intake: 'Jul 2027', country: 'Sri Lanka', eng: 'PTE 58', docs: 2, age: '8d', price: 48, qual: 'BSc IT, 2023', budget: 'AUD 25–30k' },
       { id: 'L-10439', gold: false, auction: false, course: 'Certificate IV in Commercial Cookery', level: 'VET', intake: 'Feb 2027', country: 'Colombia', eng: '—', docs: 1, age: '9d', price: 32, qual: 'Bachillerato, 2021', budget: 'AUD 10–15k' }
     ];
     const st = this.state;
+    const spent = L.filter(l => st.bought[l.id]).reduce((t, l) => t + l.price, 0);
+    const held = Object.values(st.bid).reduce((t, v) => t + v, 0);
+    const balance = 1060 - spent - held;
     const docNames = ['Passport', 'Transcripts', 'English test', 'Statement of purpose', 'Financial evidence'];
     const list = L.filter(l => (st.cat === 'all' || (st.cat === 'gold') === l.gold) && (st.mode === 'all' || (st.mode === 'auction') === l.auction));
     const rows = list.map(l => {
-      const on = st.sel === l.id, owned = !!st.bought[l.id];
+      const on = st.sel === l.id, owned = !!st.bought[l.id], gone = !!st.gone[l.id];
       return { ...l, cls: 'row' + (on ? ' on' : ''), pressed: on ? 'true' : 'false',
         catLabel: l.gold ? 'Gold' : 'Normal', catInk: l.gold ? '#7C5C0E' : '#555B66',
         engInk: l.eng === '—' ? '#8A8F98' : '#121417',
         sq: [0,1,2,3,4].map(i => ({ c: i < l.docs ? (l.gold ? '#B08A2E' : '#121417') : '#E1E3DE' })),
-        priceText: owned ? 'Owned' : (l.auction ? (st.bid[l.id] || l.top) + ' cr' : l.price + ' cr'),
-        priceSub: owned ? 'in My leads' : (l.auction ? 'bid · ' + l.closes.slice(0, 5) + ' left' : 'buy now'),
-        subInk: l.auction && !owned ? '#A24A0B' : '#555B66',
+        priceText: owned ? 'Yours' : gone ? 'Sold' : (l.auction ? (st.bid[l.id] || l.top) + ' cr' : l.price + ' cr'),
+        priceInk: owned ? '#17703F' : gone ? '#8A8F98' : '#121417',
+        priceSub: owned ? 'in My leads' : gone ? 'to another buyer' : (l.auction ? 'bid · ' + l.closes.slice(0, 5) + ' left' : 'buy now'),
+        subInk: l.auction && l.urgent && !owned ? '#A24A0B' : '#555B66',
         pick: () => this.setState({ sel: l.id }) };
     });
     const sl = L.find(l => l.id === st.sel) || L[0];
-    const owned = !!st.bought[sl.id];
+    const owned = !!st.bought[sl.id], gone = !!st.gone[sl.id];
     const myBid = st.bid[sl.id];
     const top = myBid || sl.top;
+    const min = (top || 0) + 5;
+    const ask = () => this.setState({ dialog: sl.id });
     const s = { ...sl,
       catLong: sl.gold ? 'Gold · documents verified' : 'Normal · contact verified',
       catInk: sl.gold ? '#6B4F0B' : '#3A3F48', catBg: sl.gold ? '#F3ECD8' : '#ECEDEA',
-      docList: docNames.map((n, i) => ({ name: n, state: i < sl.docs ? 'Verified' : 'Not provided', ink: i < sl.docs ? '#121417' : '#8A8F98' })),
-      isBought: owned, showBuy: !owned && !sl.auction, showBid: !owned && sl.auction,
-      top: top, bids: sl.bids + (myBid ? 1 : 0), min: (top || 0) + 5, leading: !!myBid,
-      buy: () => this.setState({ bought: { ...st.bought, [sl.id]: true } }),
-      bid: () => this.setState({ bid: { ...st.bid, [sl.id]: (top || 0) + 5 } }) };
+      docList: docNames.map((n, i) => ({ name: n, state: i < sl.docs ? 'Verified' : 'Not provided', ink: i < sl.docs ? '#121417' : '#8A8F98', stInk: i < sl.docs ? '#17703F' : '#8A8F98' })),
+      isBought: owned, isGone: gone, showBuy: !owned && !gone && !sl.auction, showBid: !owned && !gone && sl.auction,
+      short: sl.price > balance, need: sl.price - balance,
+      top, bids: sl.bids + (myBid ? 1 : 0), min, leading: !!myBid, closeInk: sl.urgent ? '#A24A0B' : '#121417', ask };
+
+    let dialog = { open: false };
+    if (st.dialog) {
+      const d = L.find(l => l.id === st.dialog);
+      const amount = d.auction ? (st.bid[d.id] || d.top) + 5 : d.price;
+      const close = () => this.setState({ dialog: null });
+      dialog = { open: true, cancel: close,
+        title: d.auction ? 'Place this bid?' : 'Buy this lead?',
+        sub: d.id + ' · ' + d.course + ' · ' + (d.gold ? 'Gold' : 'Normal'),
+        amountLabel: d.auction ? 'Bid, held until it closes' : 'Price', amount, after: (balance - amount).toLocaleString('en-AU'),
+        note: d.auction ? 'If you\'re outbid, the held credits come straight back.' : 'Exclusive: no other institution can buy this lead after you.',
+        cta: d.auction ? 'Bid ' + amount + ' credits' : 'Buy for ' + amount + ' credits',
+        confirm: () => {
+          if (d.race) this.setState({ dialog: null, gone: { ...st.gone, [d.id]: true }, toast: { kind: 'err', text: 'Someone else bought ' + d.id + ' a moment ago. You weren\'t charged.' } });
+          else if (d.auction) this.setState({ dialog: null, bid: { ...st.bid, [d.id]: amount }, toast: { kind: 'ok', text: 'Bid placed: ' + amount + ' credits held on ' + d.id + '.' } });
+          else this.setState({ dialog: null, bought: { ...st.bought, [d.id]: true }, toast: { kind: 'ok', link: true, text: d.id + ' bought for ' + amount + ' credits.' } });
+        } };
+    }
+    const t = st.toast;
+    const toast = t ? { show: true, text: t.text, link: !!t.link, bg: t.kind === 'ok' ? '#121417' : '#fff', fg: t.kind === 'ok' ? '#fff' : '#121417', border: t.kind === 'ok' ? '0' : '1px solid #E3B9B4', close: () => this.setState({ toast: null }) } : { show: false };
     const seg = (cur, key, opts) => opts.map(([id, label]) => ({ label, cls: cur === id ? 'on' : '', pressed: cur === id ? 'true' : 'false', pick: () => this.setState({ [key]: id }) }));
-    const spent = L.filter(l => st.bought[l.id]).reduce((t, l) => t + l.price, 0);
-    const held = Object.values(st.bid).reduce((t, v) => t + v, 0);
-    return { rows, s,
+    return { rows, s, dialog, toast, isEmpty: rows.length === 0,
+      clear: () => this.setState({ cat: 'all', mode: 'all' }),
       cats: seg(st.cat, 'cat', [['all', 'All'], ['gold', 'Gold'], ['normal', 'Normal']]),
       modes: seg(st.mode, 'mode', [['all', 'Any sale'], ['fixed', 'Buy now'], ['auction', 'Auction']]),
-      balance: (1060 - spent - held).toLocaleString('en-AU') };
+      balanceText: balance.toLocaleString('en-AU') };
   }
 }
 </script>
